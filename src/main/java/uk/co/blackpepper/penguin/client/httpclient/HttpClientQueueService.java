@@ -20,74 +20,74 @@ import com.google.gson.Gson;
 public class HttpClientQueueService implements QueueService
 {
 	private static final String QUEUES_URL = "%s/queues";
-	
-	private static final String QUEUE_URL = "%s/queue/%s";
-	
-    private final HttpClient client;
-    
-    private final String apiUrl;
-    
-    private final Gson gson;
 
-    public HttpClientQueueService(HttpClient client, String apiUrl)
-    {
-        this.client = client;
-        this.apiUrl = apiUrl;
-        
-        gson = new Gson();
-    }
-    
-    @Override
-    public List<Queue> getAll() throws ServiceException
-    {
-        HttpGet get = new HttpGet(String.format(QUEUES_URL, apiUrl));
-        
-        try
-        {
-            HttpResponse response = client.execute(get);
-            checkOk(response, "Error getting queues");
-            
-            return Arrays.asList(fromJson(response, Queue[].class));
-        }
-        catch (IOException exception)
-        {
-            throw new ServiceException("Error getting queues", exception);
-        }
-    }
-    
-    @Override
-    public Queue get(String id) throws ServiceException
-    {
-        HttpGet get = new HttpGet(String.format(QUEUE_URL, apiUrl, id));
-        
-        try
-        {
-            HttpResponse response = client.execute(get);
-            checkOk(response, "Error getting queue " + id);
-            
-            return fromJson(response, Queue.class);
-        }
-        catch (IOException exception)
-        {
-            throw new ServiceException("Error getting queue " + id, exception);
-        }
-    }
-    
-    private void checkOk(HttpResponse response, String message) throws ServiceException
-    {
-        int statusCode = response.getStatusLine().getStatusCode();
-        
-        if (statusCode != HttpStatus.SC_OK)
-        {
-            throw new ServiceException(message + ": " + statusCode);
-        }
-    }
-    
-    private <T> T fromJson(HttpResponse response, Class<T> type) throws IOException
-    {
-        HttpEntity entity = response.getEntity();
-        InputStreamReader content = new InputStreamReader(entity.getContent());
-        
-        return gson.fromJson(content, type);
-    }
+	private static final String QUEUE_URL = "%s/queue/%s";
+
+	private final HttpClient client;
+
+	private final String apiUrl;
+
+	private final Gson gson;
+
+	public HttpClientQueueService(HttpClient client, String apiUrl)
+	{
+		this.client = client;
+		this.apiUrl = apiUrl;
+
+		gson = new Gson();
+	}
+
+	@Override
+	public List<Queue> getAll() throws ServiceException
+	{
+		HttpGet get = new HttpGet(String.format(QUEUES_URL, apiUrl));
+
+		try
+		{
+			HttpResponse response = client.execute(get);
+			checkOk(response, "Error getting queues");
+
+			return Arrays.asList(fromJson(response, Queue[].class));
+		}
+		catch (IOException exception)
+		{
+			throw new ServiceException("Error getting queues", exception);
+		}
+	}
+
+	@Override
+	public Queue get(String id) throws ServiceException
+	{
+		HttpGet get = new HttpGet(String.format(QUEUE_URL, apiUrl, id));
+
+		try
+		{
+			HttpResponse response = client.execute(get);
+			checkOk(response, "Error getting queue " + id);
+
+			return fromJson(response, Queue.class);
+		}
+		catch (IOException exception)
+		{
+			throw new ServiceException("Error getting queue " + id, exception);
+		}
+	}
+
+	private void checkOk(HttpResponse response, String message) throws ServiceException
+	{
+		int statusCode = response.getStatusLine().getStatusCode();
+
+		if (statusCode != HttpStatus.SC_OK)
+		{
+			throw new ServiceException(message + ": " + statusCode);
+		}
+	}
+
+	private <T> T fromJson(HttpResponse response, Class<T> type) throws IOException
+	{
+		HttpEntity entity = response.getEntity();
+		InputStreamReader content = new InputStreamReader(entity.getContent());
+
+		return gson.fromJson(content, type);
+	}
 }

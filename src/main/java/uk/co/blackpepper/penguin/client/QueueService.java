@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface QueueService
 {
-    List<Queue> getAll() throws ServiceException;
-    
-    Queue get(String id) throws ServiceException;
+	List<Queue> getAll() throws ServiceException;
+
+	Queue get(String id) throws ServiceException;
 }
