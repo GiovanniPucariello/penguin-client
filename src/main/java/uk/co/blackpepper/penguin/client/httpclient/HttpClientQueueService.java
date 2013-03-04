@@ -19,6 +19,10 @@ import com.google.gson.Gson;
 
 public class HttpClientQueueService implements QueueService
 {
+	private static final String QUEUES_URL = "%s/queues";
+	
+	private static final String QUEUE_URL = "%s/queue/%s";
+	
     private final HttpClient client;
     
     private final String apiUrl;
@@ -36,7 +40,7 @@ public class HttpClientQueueService implements QueueService
     @Override
     public List<Queue> getAll() throws ServiceException
     {
-        HttpGet get = new HttpGet(apiUrl + "/queues");
+        HttpGet get = new HttpGet(String.format(QUEUES_URL, apiUrl));
         
         try
         {
@@ -54,7 +58,7 @@ public class HttpClientQueueService implements QueueService
     @Override
     public Queue get(String id) throws ServiceException
     {
-        HttpGet get = new HttpGet(String.format("%s/queue/%s", apiUrl, id));
+        HttpGet get = new HttpGet(String.format(QUEUE_URL, apiUrl, id));
         
         try
         {
