@@ -15,12 +15,17 @@ final class HttpRequests
 		throw new AssertionError();
 	}
 	
-    public static Matcher<HttpUriRequest> matchesRequest(String method, String uri) throws URISyntaxException
+	public static Matcher<HttpUriRequest> matchesGet(String uri) throws URISyntaxException
+	{
+		return matchesRequest("GET", uri);
+	}
+	
+    private static Matcher<HttpUriRequest> matchesRequest(String method, String uri) throws URISyntaxException
     {
     	return matchesRequest(method, new URI(uri));
     }
     
-    public static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri)
+    private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri)
     {
     	return new TypeSafeMatcher<HttpUriRequest>()
 		{
