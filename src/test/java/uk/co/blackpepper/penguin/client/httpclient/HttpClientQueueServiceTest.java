@@ -3,6 +3,7 @@ package uk.co.blackpepper.penguin.client.httpclient;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,7 +50,16 @@ public class HttpClientQueueServiceTest
     }
     
     @Test
-    public void getAll() throws ServiceException, IOException, URISyntaxException
+    public void getAllWhenNoQueues() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+            .thenReturn(createJsonResponse("[]"));
+        
+        assertEquals(Collections.emptyList(), service.getAll());
+    }
+    
+    @Test
+    public void getAllWhenQueue() throws ServiceException, IOException, URISyntaxException
     {
         when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
             .thenReturn(createJsonResponse("[{_id: 1, name: A}]"));
@@ -57,6 +67,35 @@ public class HttpClientQueueServiceTest
         List<Queue> expecteds = Collections.singletonList(new Queue("1", "A"));
         
         assertEquals(expecteds, service.getAll());
+    }
+    
+    @Test
+    public void getAllWhenQueues() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+            .thenReturn(createJsonResponse("[{_id: 1, name: A}, {_id: 2, name: B}]"));
+        
+        List<Queue> expecteds = Arrays.asList(new Queue("1", "A"), new Queue("2", "B"));
+        
+        assertEquals(expecteds, service.getAll());
+    }
+    
+    @Test(expected = ServiceException.class)
+    public void getAllWhenNotFound() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+            .thenReturn(createNotFound());
+        
+        service.getAll();
+    }
+    
+    @Test(expected = ServiceException.class)
+    public void getAllWhenIOException() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+            .thenThrow(new IOException());
+        
+        service.getAll();
     }
     
     private static Matcher<HttpUriRequest> matchesRequest(String method, String uri) throws URISyntaxException
@@ -93,14 +132,22 @@ public class HttpClientQueueServiceTest
     
     private static HttpResponse createResponse(HttpEntity entity)
     {
-        StatusLine statusLine = new BasicStatusLine(new ProtocolVersion("HTTP", 1, 0), HttpStatus.SC_OK, null);
-        return createResponse(statusLine, entity);
+        return createResponse(HttpStatus.SC_OK, entity);
     }
     
-    private static HttpResponse createResponse(StatusLine statusLine, HttpEntity entity)
+    private static HttpResponse createResponse(int statusCode, HttpEntity entity)
     {
+        ProtocolVersion version = new ProtocolVersion("HTTP", 1, 0);
+		StatusLine statusLine = new BasicStatusLine(version, statusCode, null);
+		
         BasicHttpResponse response = new BasicHttpResponse(statusLine);
         response.setEntity(entity);
         return response;
     }
+    
+    private static HttpResponse createNotFound()
+    {
+        return createResponse(HttpStatus.SC_NOT_FOUND, null);
+    }
+    
 }
