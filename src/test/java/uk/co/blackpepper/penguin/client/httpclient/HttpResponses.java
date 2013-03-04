@@ -17,9 +17,9 @@ final class HttpResponses
 		throw new AssertionError();
 	}
 	
-    public static HttpResponse jsonResponse(String json)
+    public static HttpResponse json(String json)
     {
-        return response(new StringEntity(json, ContentType.APPLICATION_JSON));
+        return ok(new StringEntity(json, ContentType.APPLICATION_JSON));
     }
     
     public static HttpResponse notFound()
@@ -27,7 +27,7 @@ final class HttpResponses
         return response(HttpStatus.SC_NOT_FOUND, null);
     }
     
-    private static HttpResponse response(HttpEntity entity)
+    private static HttpResponse ok(HttpEntity entity)
     {
         return response(HttpStatus.SC_OK, entity);
     }

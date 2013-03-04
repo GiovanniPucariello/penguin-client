@@ -20,7 +20,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesGet;
-import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.jsonResponse;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.json;
 import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.notFound;
 
 public class HttpClientQueueServiceTest
@@ -40,7 +40,7 @@ public class HttpClientQueueServiceTest
     public void getAllWhenNoQueues() throws ServiceException, IOException, URISyntaxException
     {
         when(client.execute(argThat(matchesGet("http://localhost/api/queues"))))
-            .thenReturn(jsonResponse("[]"));
+            .thenReturn(json("[]"));
         
         assertEquals(emptyList(), service.getAll());
     }
@@ -49,7 +49,7 @@ public class HttpClientQueueServiceTest
     public void getAllWhenQueue() throws ServiceException, IOException, URISyntaxException
     {
         when(client.execute(argThat(matchesGet("http://localhost/api/queues"))))
-            .thenReturn(jsonResponse("[{_id: 1, name: A}]"));
+            .thenReturn(json("[{_id: 1, name: A}]"));
         
         assertEquals(singletonList(new Queue("1", "A")), service.getAll());
     }
@@ -58,7 +58,7 @@ public class HttpClientQueueServiceTest
     public void getAllWhenQueues() throws ServiceException, IOException, URISyntaxException
     {
         when(client.execute(argThat(matchesGet("http://localhost/api/queues"))))
-            .thenReturn(jsonResponse("[{_id: 1, name: A}, {_id: 2, name: B}]"));
+            .thenReturn(json("[{_id: 1, name: A}, {_id: 2, name: B}]"));
         
         assertEquals(asList(new Queue("1", "A"), new Queue("2", "B")), service.getAll());
     }
