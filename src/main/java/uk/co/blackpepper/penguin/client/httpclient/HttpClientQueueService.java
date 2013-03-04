@@ -41,20 +41,9 @@ public class HttpClientQueueService implements QueueService
         try
         {
             HttpResponse response = client.execute(get);
+            checkOk(response, "Error getting queues");
             
-            int statusCode = response.getStatusLine().getStatusCode();
-            
-            if (statusCode != HttpStatus.SC_OK)
-            {
-                throw new ServiceException("Error getting queues: " + statusCode);
-            }
-            
-            HttpEntity entity = response.getEntity();
-            InputStreamReader content = new InputStreamReader(entity.getContent());
-            
-            Queue[] queues = gson.fromJson(content, Queue[].class);
-            
-            return Arrays.asList(queues);
+            return Arrays.asList(fromJson(response, Queue[].class));
         }
         catch (IOException exception)
         {
@@ -70,22 +59,31 @@ public class HttpClientQueueService implements QueueService
         try
         {
             HttpResponse response = client.execute(get);
+            checkOk(response, "Error getting queue " + id);
             
-            int statusCode = response.getStatusLine().getStatusCode();
-            
-            if (statusCode != HttpStatus.SC_OK)
-            {
-                throw new ServiceException(String.format("Error getting queue %s: %s", id, statusCode));
-            }
-            
-            HttpEntity entity = response.getEntity();
-            InputStreamReader content = new InputStreamReader(entity.getContent());
-            
-            return gson.fromJson(content, Queue.class);
+            return fromJson(response, Queue.class);
         }
         catch (IOException exception)
         {
-            throw new ServiceException(String.format("Error getting queue %s", id), exception);
+            throw new ServiceException("Error getting queue " + id, exception);
         }
+    }
+    
+    private void checkOk(HttpResponse response, String message) throws ServiceException
+    {
+        int statusCode = response.getStatusLine().getStatusCode();
+        
+        if (statusCode != HttpStatus.SC_OK)
+        {
+            throw new ServiceException(message + ": " + statusCode);
+        }
+    }
+    
+    private <T> T fromJson(HttpResponse response, Class<T> type) throws IOException
+    {
+        HttpEntity entity = response.getEntity();
+        InputStreamReader content = new InputStreamReader(entity.getContent());
+        
+        return gson.fromJson(content, type);
     }
 }
