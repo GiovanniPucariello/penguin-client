@@ -33,13 +33,13 @@ public class HttpClientQueueServiceTest
     public void setUp()
     {
         client = mock(HttpClient.class);
-        service = new HttpClientQueueService(client, "http://localhost:8080/api");
+        service = new HttpClientQueueService(client, "http://localhost/api");
     }
     
     @Test
     public void getAllWhenNoQueues() throws ServiceException, IOException, URISyntaxException
     {
-        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost/api/queues"))))
             .thenReturn(jsonResponse("[]"));
         
         assertEquals(emptyList(), service.getAll());
@@ -48,7 +48,7 @@ public class HttpClientQueueServiceTest
     @Test
     public void getAllWhenQueue() throws ServiceException, IOException, URISyntaxException
     {
-        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost/api/queues"))))
             .thenReturn(jsonResponse("[{_id: 1, name: A}]"));
         
         assertEquals(singletonList(new Queue("1", "A")), service.getAll());
@@ -57,7 +57,7 @@ public class HttpClientQueueServiceTest
     @Test
     public void getAllWhenQueues() throws ServiceException, IOException, URISyntaxException
     {
-        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost/api/queues"))))
             .thenReturn(jsonResponse("[{_id: 1, name: A}, {_id: 2, name: B}]"));
         
         assertEquals(asList(new Queue("1", "A"), new Queue("2", "B")), service.getAll());
@@ -66,7 +66,7 @@ public class HttpClientQueueServiceTest
     @Test(expected = ServiceException.class)
     public void getAllWhenNotFound() throws ServiceException, IOException, URISyntaxException
     {
-        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost/api/queues"))))
             .thenReturn(notFound());
         
         service.getAll();
@@ -75,7 +75,7 @@ public class HttpClientQueueServiceTest
     @Test(expected = ServiceException.class)
     public void getAllWhenIOException() throws ServiceException, IOException, URISyntaxException
     {
-        when(client.execute(argThat(matchesRequest("GET", "http://localhost:8080/api/queues"))))
+        when(client.execute(argThat(matchesRequest("GET", "http://localhost/api/queues"))))
             .thenThrow(new IOException());
         
         service.getAll();
