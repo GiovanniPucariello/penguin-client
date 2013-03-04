@@ -80,4 +80,31 @@ public class HttpClientQueueServiceTest
         
         service.getAll();
     }
+
+    @Test
+    public void getWhenQueue() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+            .thenReturn(json("{_id: 1, name: A}"));
+        
+        assertEquals(new Queue("1", "A"), service.get("1"));
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getWhenNotFound() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+            .thenReturn(notFound());
+        
+        service.get("1");
+    }
+
+    @Test(expected = ServiceException.class)
+    public void getWhenIOException() throws ServiceException, IOException, URISyntaxException
+    {
+        when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+            .thenThrow(new IOException());
+        
+        service.get("1");
+    }
 }

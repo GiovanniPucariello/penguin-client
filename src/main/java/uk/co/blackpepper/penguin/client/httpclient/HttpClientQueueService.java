@@ -61,4 +61,31 @@ public class HttpClientQueueService implements QueueService
             throw new ServiceException("Error getting queues", exception);
         }
     }
+    
+    @Override
+    public Queue get(String id) throws ServiceException
+    {
+        HttpGet get = new HttpGet(String.format("%s/queue/%s", apiUrl, id));
+        
+        try
+        {
+            HttpResponse response = client.execute(get);
+            
+            int statusCode = response.getStatusLine().getStatusCode();
+            
+            if (statusCode != HttpStatus.SC_OK)
+            {
+                throw new ServiceException(String.format("Error getting queue %s: %s", id, statusCode));
+            }
+            
+            HttpEntity entity = response.getEntity();
+            InputStreamReader content = new InputStreamReader(entity.getContent());
+            
+            return gson.fromJson(content, Queue.class);
+        }
+        catch (IOException exception)
+        {
+            throw new ServiceException(String.format("Error getting queue %s", id), exception);
+        }
+    }
 }
