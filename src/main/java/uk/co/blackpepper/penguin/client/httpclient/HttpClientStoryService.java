@@ -2,6 +2,7 @@ package uk.co.blackpepper.penguin.client.httpclient;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -55,6 +56,30 @@ public class HttpClientStoryService implements StoryService
 		}
 	}
 
+	@Override
+	public List<Story> getMerged(String queueId) throws ServiceException {
+	    List<Story> allStories = getAll(queueId);
+	    List<Story> mergedStories = new ArrayList<Story>();
+	    for (Story story : allStories) {
+		if (story.isMerged()) {
+		    mergedStories.add(story);
+		}
+	    }
+	    return mergedStories;
+	}
+
+	@Override
+	public List<Story> getUnMerged(String queueId) throws ServiceException {
+	    List<Story> allStories = getAll(queueId);
+	    List<Story> unMergedStories = new ArrayList<Story>();
+	    for (Story story : allStories) {
+		if (!story.isMerged()) {
+		    unMergedStories.add(story);
+		}
+	    }
+	    return unMergedStories;
+	}
+	
 	private void checkOk(HttpResponse response, String message) throws ServiceException
 	{
 		int statusCode = response.getStatusLine().getStatusCode();
@@ -101,4 +126,5 @@ public class HttpClientStoryService implements StoryService
 	    }
 	    
 	}
+
 }

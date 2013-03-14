@@ -66,7 +66,7 @@ public class Story
 		return author;
 	}
 
-	public Boolean getMerged()
+	public Boolean isMerged()
 	{
 		return merged;
 	}
@@ -95,7 +95,7 @@ public class Story
 			&& reference.equals(story.getReference())
 			&& title.equals(story.getTitle())
 			&& author.equals(story.getAuthor())
-			&& merged.equals(story.getMerged());
+			&& merged.equals(story.isMerged());
 	}
 
 	@Override

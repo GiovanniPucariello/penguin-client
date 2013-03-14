@@ -1,27 +1,24 @@
 package uk.co.blackpepper.penguin.client.httpclient;
 
+import static java.util.Collections.emptyList;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesGet;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.json;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.notFound;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.apache.http.client.HttpClient;
 import org.junit.Before;
 import org.junit.Test;
 
-import uk.co.blackpepper.penguin.client.Story;
 import uk.co.blackpepper.penguin.client.ServiceException;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesGet;
-import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.json;
-import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.notFound;
+import uk.co.blackpepper.penguin.client.Story;
 
 public class HttpClientStoryServiceTest
 {
@@ -131,4 +128,27 @@ public class HttpClientStoryServiceTest
 
 		service.getAll(QUEUE_ID);
 	}
+
+	@Test
+	public void getMergedStories() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet(GET_ALL_REQUEST_URL))))
+			.thenReturn(json(QUEUE_WITH_MULTIPLE_STORIES));
+
+		List<Story> results = service.getMerged(QUEUE_ID);
+		assertEquals(1, results.size());
+		assertEquals(new Story(STORY_ID_2, "S-2", "T2", "A2", true), results.get(0));
+	}
+
+	@Test
+	public void getUnMergedStories() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet(GET_ALL_REQUEST_URL))))
+			.thenReturn(json(QUEUE_WITH_MULTIPLE_STORIES));
+
+		List<Story> results = service.getUnMerged(QUEUE_ID);
+		assertEquals(1, results.size());
+		assertEquals(new Story(STORY_ID_1, "S-1", "T1", "A1", false), results.get(0));
+	}
+
 }
