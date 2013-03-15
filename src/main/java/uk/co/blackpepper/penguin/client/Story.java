@@ -99,7 +99,7 @@ public class Story
 	@Override
 	public String toString()
 	{
-		return String.format("%s[_id=%s, reference=%s title=%s author=%s merged=%s]", 
+		return String.format("%s[_id=%s, reference=%s, title=%s, author=%s, merged=%s]", 
 			getClass().getName(), _id, reference, title, author, merged);
 	}
 }
