@@ -21,14 +21,14 @@ public class Story
 			throw new NullPointerException("_id");
 		}
 
-		if (title == null)
-		{
-			throw new NullPointerException("title");
-		}
-
 		if (reference == null)
 		{
 			throw new NullPointerException("reference");
+		}
+
+		if (title == null)
+		{
+			throw new NullPointerException("title");
 		}
 
 		if (author == null)
