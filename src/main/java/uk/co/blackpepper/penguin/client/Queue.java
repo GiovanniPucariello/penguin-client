@@ -36,6 +36,7 @@ public class Queue
 	/**
 	 * Default constructor for GSON.
 	 */
+	@SuppressWarnings("unused")
 	private Queue()
 	{
 		_id = null;

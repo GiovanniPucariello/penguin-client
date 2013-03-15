@@ -28,6 +28,7 @@ public class Story
 	/**
 	 * Default constructor for GSON.
 	 */
+	@SuppressWarnings("unused")
 	private Story()
 	{
 		_id = null;
