@@ -22,20 +22,20 @@ import uk.co.blackpepper.penguin.client.Story;
 
 public class HttpClientStoryServiceTest
 {
-	private String BASE_URL = "http://localhost/api";
-	private String QUEUE_ID = "513c58da4df5b49e3d000001";
-	private String GET_ALL_REQUEST_URL = BASE_URL + "/queue/" + QUEUE_ID;
-	private String STORY_ID_1 = "513c5eef4df5b49e3d000002";
-	private String STORY_ID_2 = "513c5eef4df5b49e3d000003";
+	private static final String BASE_URL = "http://localhost/api";
+	private static final String QUEUE_ID = "513c58da4df5b49e3d000001";
+	private static final String GET_ALL_REQUEST_URL = BASE_URL + "/queue/" + QUEUE_ID;
+	private static final String STORY_ID_1 = "513c5eef4df5b49e3d000002";
+	private static final String STORY_ID_2 = "513c5eef4df5b49e3d000003";
 	
-	private String EMPTY_QUEUE = 
+	private static final String EMPTY_QUEUE = 
 		"{ " +
 		" \"name\": \"Queue\", " +
 		"   \"stories\": [], " +
 		"   \"_id\": \"513c58da4df5b49e3d000001\" " +
 		" }";
 	
-	private String QUEUE_WITH_ONE_STORY =
+	private static final String QUEUE_WITH_ONE_STORY =
 		"{ " +
 		" \"_id\": \"513c58da4df5b49e3d000001\", " +
 		"  \"name\": \"Queue\", " +
@@ -50,7 +50,7 @@ public class HttpClientStoryServiceTest
 		"  ] " +
 		"}";
 
-	private String QUEUE_WITH_MULTIPLE_STORIES =
+	private static final String QUEUE_WITH_MULTIPLE_STORIES =
 		"{ " +
 		" \"_id\": \"513c58da4df5b49e3d000001\", " +
 		"  \"name\": \"Queue\", " +
