@@ -101,30 +101,8 @@ public class HttpClientStoryService implements StoryService
 		//   return gson.fromJson(content, type);
 		// Until the we must parse the queue to obtain the stories.
 		
-		QueueWithStories queue = gson.fromJson(content, QueueWithStories.class);
+		Queue queue = gson.fromJson(content, Queue.class);
 		
 		return queue.getStories();
 	}
-
-	// TODO This inner class is used to parse the queue JSON to retrieve a list of stories.
-	// It can be removed once there is an api which returns just a list of stories for a queue.
-	private class QueueWithStories extends Queue {
-
-	    private List<Story> stories;
-	    
-	    public QueueWithStories(String _id, String name, List<Story> stories) {
-		super(_id, name);
-		this.setStories(stories);
-	    }
-
-	    public List<Story> getStories() {
-		return stories;
-	    }
-
-	    public void setStories(List<Story> stories) {
-		this.stories = stories;
-	    }
-	    
-	}
-
 }

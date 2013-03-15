@@ -1,6 +1,10 @@
 package uk.co.blackpepper.penguin.client;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class Queue
 {
@@ -8,7 +12,14 @@ public class Queue
 
 	private final String name;
 
+	private final List<Story> stories;
+	
 	public Queue(String _id, String name)
+	{
+		this(_id, name, null);
+	}
+
+	public Queue(String _id, String name, Collection<? extends Story> stories)
 	{
 		if (_id == null)
 		{
@@ -19,9 +30,25 @@ public class Queue
 		{
 			throw new NullPointerException("name");
 		}
+		
+		if (stories == null)
+		{
+			stories = Collections.emptyList();
+		}
 
 		this._id = _id;
 		this.name = name;
+		this.stories = Collections.unmodifiableList(new ArrayList<Story>(stories));
+	}
+	
+	/**
+	 * Default constructor for GSON.
+	 */
+	private Queue()
+	{
+		_id = null;
+		name = null;
+		stories = Collections.emptyList();
 	}
 
 	public String getId()
@@ -33,11 +60,16 @@ public class Queue
 	{
 		return name;
 	}
+	
+	public List<Story> getStories()
+	{
+		return stories;
+	}
 
 	@Override
 	public int hashCode()
 	{
-		return Arrays.hashCode(new Object[] {_id, name});
+		return Arrays.hashCode(new Object[] {_id, name, stories});
 	}
 
 	@Override
@@ -51,12 +83,13 @@ public class Queue
 		Queue queue = (Queue) object;
 
 		return _id.equals(queue.getId())
-			&& name.equals(queue.getName());
+			&& name.equals(queue.getName())
+			&& stories.equals(queue.getStories());
 	}
 
 	@Override
 	public String toString()
 	{
-		return String.format("%s[_id=%s, name=%s]", getClass().getName(), _id, name);
+		return String.format("%s[_id=%s, name=%s, stories=%s]", getClass().getName(), _id, name, stories);
 	}
 }
