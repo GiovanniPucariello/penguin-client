@@ -2,6 +2,8 @@ package uk.co.blackpepper.penguin.client;
 
 import java.util.Arrays;
 
+import static uk.co.blackpepper.penguin.client.Preconditions.checkNotNull;
+
 public class Story
 {
 	private final String _id;
@@ -16,30 +18,10 @@ public class Story
 
 	public Story(String _id, String reference, String title, String author, boolean merged)
 	{
-		if (_id == null)
-		{
-			throw new NullPointerException("_id");
-		}
-
-		if (reference == null)
-		{
-			throw new NullPointerException("reference");
-		}
-
-		if (title == null)
-		{
-			throw new NullPointerException("title");
-		}
-
-		if (author == null)
-		{
-			throw new NullPointerException("author");
-		}
-
-		this._id = _id;
-		this.reference = reference;
-		this.title = title;
-		this.author = author;
+		this._id = checkNotNull(_id, "_id");
+		this.reference = checkNotNull(reference, "reference");
+		this.title = checkNotNull(title, "title");
+		this.author = checkNotNull(author, "author");
 		this.merged = merged;
 	}
 	

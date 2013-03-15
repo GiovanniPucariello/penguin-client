@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static uk.co.blackpepper.penguin.client.Preconditions.checkNotNull;
+
 public class Queue
 {
 	private final String _id;
@@ -21,23 +23,13 @@ public class Queue
 
 	public Queue(String _id, String name, Collection<? extends Story> stories)
 	{
-		if (_id == null)
-		{
-			throw new NullPointerException("_id");
-		}
-
-		if (name == null)
-		{
-			throw new NullPointerException("name");
-		}
-		
 		if (stories == null)
 		{
 			stories = Collections.emptyList();
 		}
 
-		this._id = _id;
-		this.name = name;
+		this._id = checkNotNull(_id, "_id");
+		this.name = checkNotNull(name, "name");
 		this.stories = Collections.unmodifiableList(new ArrayList<Story>(stories));
 	}
 	
