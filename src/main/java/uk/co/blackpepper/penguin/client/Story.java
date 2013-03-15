@@ -12,9 +12,9 @@ public class Story
 
 	private final String author;
 	
-	private final Boolean merged;
+	private final boolean merged;
 
-	public Story(String _id, String reference, String title, String author, Boolean merged)
+	public Story(String _id, String reference, String title, String author, boolean merged)
 	{
 		if (_id == null)
 		{
@@ -34,11 +34,6 @@ public class Story
 		if (author == null)
 		{
 			throw new NullPointerException("author");
-		}
-
-		if (merged == null)
-		{
-			throw new NullPointerException("merged");
 		}
 
 		this._id = _id;
@@ -68,7 +63,7 @@ public class Story
 		return author;
 	}
 
-	public Boolean isMerged()
+	public boolean isMerged()
 	{
 		return merged;
 	}
@@ -93,7 +88,7 @@ public class Story
 			&& reference.equals(story.getReference())
 			&& title.equals(story.getTitle())
 			&& author.equals(story.getAuthor())
-			&& merged.equals(story.isMerged());
+			&& merged == story.isMerged();
 	}
 
 	@Override
