@@ -42,6 +42,18 @@ public class Story
 		this.author = author;
 		this.merged = merged;
 	}
+	
+	/**
+	 * Default constructor for GSON.
+	 */
+	private Story()
+	{
+		_id = null;
+		reference = null;
+		title = null;
+		author = null;
+		merged = false;
+	}
 
 	public String getId()
 	{
