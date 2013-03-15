@@ -141,12 +141,12 @@ public class HttpClientStoryServiceTest
 	}
 
 	@Test
-	public void getUnMergedStories() throws ServiceException, IOException, URISyntaxException
+	public void getUnmergedStories() throws ServiceException, IOException, URISyntaxException
 	{
 		when(client.execute(argThat(matchesGet(GET_ALL_REQUEST_URL))))
 			.thenReturn(json(QUEUE_WITH_MULTIPLE_STORIES));
 
-		List<Story> results = service.getUnMerged(QUEUE_ID);
+		List<Story> results = service.getUnmerged(QUEUE_ID);
 		assertEquals(1, results.size());
 		assertEquals(new Story(STORY_ID_1, "S-1", "T1", "A1", false), results.get(0));
 	}

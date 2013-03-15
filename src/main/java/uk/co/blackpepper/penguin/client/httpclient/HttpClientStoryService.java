@@ -59,19 +59,19 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 	}
 
 	@Override
-	public List<Story> getUnMerged(String queueId) throws ServiceException
+	public List<Story> getUnmerged(String queueId) throws ServiceException
 	{
 		List<Story> allStories = getAll(queueId);
-		List<Story> unMergedStories = new ArrayList<Story>();
+		List<Story> unmergedStories = new ArrayList<Story>();
 		
 		for (Story story : allStories)
 		{
 			if (!story.isMerged())
 			{
-				unMergedStories.add(story);
+				unmergedStories.add(story);
 			}
 		}
 		
-		return unMergedStories;
+		return unmergedStories;
 	}
 }
