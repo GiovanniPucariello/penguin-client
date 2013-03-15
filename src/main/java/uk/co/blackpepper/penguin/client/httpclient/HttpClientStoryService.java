@@ -18,8 +18,6 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 	// TODO: use /queue/:id/stories when implemented
 	private static final String STORIES_URL = "%s/queue/%s";
 
-	private static final String STORY_URL = "%s/queue/%s/story/%s";
-
 	public HttpClientStoryService(HttpClient client, String apiUrl)
 	{
 		super(client, apiUrl);
