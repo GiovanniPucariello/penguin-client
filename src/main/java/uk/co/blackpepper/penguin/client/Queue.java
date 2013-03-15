@@ -1,5 +1,7 @@
 package uk.co.blackpepper.penguin.client;
 
+import java.util.Arrays;
+
 public class Queue
 {
 	private final String _id;
@@ -35,7 +37,7 @@ public class Queue
 	@Override
 	public int hashCode()
 	{
-		return (_id.hashCode() * 31) + name.hashCode();
+		return Arrays.hashCode(new Object[] {_id, name});
 	}
 
 	@Override

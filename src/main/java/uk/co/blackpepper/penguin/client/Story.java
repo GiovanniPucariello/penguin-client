@@ -1,5 +1,7 @@
 package uk.co.blackpepper.penguin.client;
 
+import java.util.Arrays;
+
 public class Story
 {
 	private final String _id;
@@ -74,11 +76,7 @@ public class Story
 	@Override
 	public int hashCode()
 	{
-		return (_id.hashCode() * 31) 
-			+ (reference.hashCode() * 32) 
-			+ (title.hashCode() * 33) 
-			+ (author.hashCode() * 34)
-			+ merged.hashCode();
+		return Arrays.hashCode(new Object[] {_id, reference, title, author, merged});
 	}
 
 	@Override
