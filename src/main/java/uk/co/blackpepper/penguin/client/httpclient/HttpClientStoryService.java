@@ -44,34 +44,27 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 	@Override
 	public List<Story> getMerged(String queueId) throws ServiceException
 	{
-		List<Story> allStories = getAll(queueId);
-		List<Story> mergedStories = new ArrayList<Story>();
-		
-		for (Story story : allStories)
-		{
-			if (story.isMerged())
-			{
-				mergedStories.add(story);
-			}
-		}
-		
-		return mergedStories;
+		return filterByMerged(getAll(queueId), true);
 	}
 
 	@Override
 	public List<Story> getUnmerged(String queueId) throws ServiceException
 	{
-		List<Story> allStories = getAll(queueId);
-		List<Story> unmergedStories = new ArrayList<Story>();
+		return filterByMerged(getAll(queueId), false);
+	}
+	
+	private static List<Story> filterByMerged(List<Story> stories, boolean merged)
+	{
+		List<Story> filteredStories = new ArrayList<Story>();
 		
-		for (Story story : allStories)
+		for (Story story : stories)
 		{
-			if (!story.isMerged())
+			if (story.isMerged() == merged)
 			{
-				unmergedStories.add(story);
+				filteredStories.add(story);
 			}
 		}
 		
-		return unmergedStories;
+		return filteredStories;
 	}
 }
