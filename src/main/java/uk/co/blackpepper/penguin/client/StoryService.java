@@ -5,6 +5,8 @@ import java.util.List;
 public interface StoryService
 {
 	List<Story> getAll(String queueId) throws ServiceException;
+
 	List<Story> getMerged(String queueId) throws ServiceException;
+
 	List<Story> getUnMerged(String queueId) throws ServiceException;
 }
