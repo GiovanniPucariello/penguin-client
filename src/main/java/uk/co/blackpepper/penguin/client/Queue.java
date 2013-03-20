@@ -38,9 +38,7 @@ public class Queue
 	 */
 	Queue()
 	{
-		_id = "";
-		name = "";
-		stories = Collections.emptyList();
+		this("", "", null);
 	}
 
 	public String getId()

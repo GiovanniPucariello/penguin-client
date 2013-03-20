@@ -30,11 +30,7 @@ public class Story
 	 */
 	Story()
 	{
-		_id = "";
-		reference = "";
-		title = "";
-		author = "";
-		merged = false;
+		this("", "", "", "", false);
 	}
 
 	public String getId()
