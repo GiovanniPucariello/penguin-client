@@ -30,10 +30,10 @@ public class Story
 	 */
 	Story()
 	{
-		_id = null;
-		reference = null;
-		title = null;
-		author = null;
+		_id = "";
+		reference = "";
+		title = "";
+		author = "";
 		merged = false;
 	}
 

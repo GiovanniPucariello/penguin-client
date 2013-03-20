@@ -57,7 +57,7 @@ public class QueueTest
 	{
 		Queue queue = new Queue();
 		
-		assertQueueEquals(null, null, Collections.<Story>emptyList(), queue);
+		assertQueueEquals("", "", Collections.<Story>emptyList(), queue);
 	}
 	
 	@Test(expected = UnsupportedOperationException.class)

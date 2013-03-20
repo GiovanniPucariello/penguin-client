@@ -45,7 +45,7 @@ public class StoryTest
 	{
 		Story story = new Story();
 		
-		assertStoryEquals(null, null, null, null, false, story);
+		assertStoryEquals("", "", "", "", false, story);
 	}
 	
 	@Test

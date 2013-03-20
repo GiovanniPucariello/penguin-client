@@ -38,8 +38,8 @@ public class Queue
 	 */
 	Queue()
 	{
-		_id = null;
-		name = null;
+		_id = "";
+		name = "";
 		stories = Collections.emptyList();
 	}
 
