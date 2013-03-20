@@ -18,15 +18,15 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 	// TODO: use /queue/:id/stories when implemented
 	private static final String STORIES_URL = "%s/queue/%s";
 
-	public HttpClientStoryService(HttpClient client, String apiUrl)
+	public HttpClientStoryService(HttpClient client, String serviceUrl)
 	{
-		super(client, apiUrl);
+		super(client, serviceUrl);
 	}
 
 	@Override
 	public List<Story> getAll(String queueId) throws ServiceException
 	{
-		HttpGet get = new HttpGet(String.format(STORIES_URL, getApiUrl(), queueId));
+		HttpGet get = new HttpGet(String.format(STORIES_URL, getServiceUrl(), queueId));
 
 		try
 		{

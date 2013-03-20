@@ -17,14 +17,14 @@ public abstract class AbstractHttpClientService
 {
 	private final HttpClient client;
 
-	private final String apiUrl;
+	private final String serviceUrl;
 
 	private final Gson gson;
 
-	public AbstractHttpClientService(HttpClient client, String apiUrl)
+	public AbstractHttpClientService(HttpClient client, String serviceUrl)
 	{
 		this.client = client;
-		this.apiUrl = apiUrl;
+		this.serviceUrl = serviceUrl;
 		
 		gson = new Gson();
 	}
@@ -34,9 +34,9 @@ public abstract class AbstractHttpClientService
 		return client;
 	}
 	
-	public String getApiUrl()
+	public String getServiceUrl()
 	{
-		return apiUrl;
+		return serviceUrl;
 	}
 
 	protected void checkOk(HttpResponse response, String message) throws ServiceException

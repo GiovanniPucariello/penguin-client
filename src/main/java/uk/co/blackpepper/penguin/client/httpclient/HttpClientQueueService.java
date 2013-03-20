@@ -18,15 +18,15 @@ public class HttpClientQueueService extends AbstractHttpClientService implements
 
 	private static final String QUEUE_URL = "%s/queue/%s";
 
-	public HttpClientQueueService(HttpClient client, String apiUrl)
+	public HttpClientQueueService(HttpClient client, String serviceUrl)
 	{
-		super(client, apiUrl);
+		super(client, serviceUrl);
 	}
 
 	@Override
 	public List<Queue> getAll() throws ServiceException
 	{
-		HttpGet get = new HttpGet(String.format(QUEUES_URL, getApiUrl()));
+		HttpGet get = new HttpGet(String.format(QUEUES_URL, getServiceUrl()));
 
 		try
 		{
@@ -44,7 +44,7 @@ public class HttpClientQueueService extends AbstractHttpClientService implements
 	@Override
 	public Queue get(String id) throws ServiceException
 	{
-		HttpGet get = new HttpGet(String.format(QUEUE_URL, getApiUrl(), id));
+		HttpGet get = new HttpGet(String.format(QUEUE_URL, getServiceUrl(), id));
 
 		try
 		{
