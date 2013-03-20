@@ -112,6 +112,15 @@ public class HttpClientStoryServiceTest
 	}
 
 	@Test(expected = ServiceException.class)
+	public void getAllWhenInvalid() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+			.thenReturn(json("x"));
+
+		service.getAll("1");
+	}
+
+	@Test(expected = ServiceException.class)
 	public void getAllWhenNotFound() throws ServiceException, IOException, URISyntaxException
 	{
 		when(client.execute(argThat(matchesGet(GET_ALL_REQUEST_URL))))
@@ -140,6 +149,15 @@ public class HttpClientStoryServiceTest
 		assertEquals(new Story(STORY_ID_2, "S-2", "T2", "A2", true), results.get(0));
 	}
 
+	@Test(expected = ServiceException.class)
+	public void getMergedWhenInvalid() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+			.thenReturn(json("x"));
+
+		service.getMerged("1");
+	}
+
 	@Test
 	public void getUnmergedStories() throws ServiceException, IOException, URISyntaxException
 	{
@@ -151,4 +169,12 @@ public class HttpClientStoryServiceTest
 		assertEquals(new Story(STORY_ID_1, "S-1", "T1", "A1", false), results.get(0));
 	}
 
+	@Test(expected = ServiceException.class)
+	public void getUnmergedWhenInvalid() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+			.thenReturn(json("x"));
+
+		service.getUnmerged("1");
+	}
 }

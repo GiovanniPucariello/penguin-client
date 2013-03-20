@@ -64,6 +64,15 @@ public class HttpClientQueueServiceTest
 	}
 
 	@Test(expected = ServiceException.class)
+	public void getAllWhenInvalid() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet("http://localhost/api/queues"))))
+			.thenReturn(json("x"));
+
+		service.getAll();
+	}
+
+	@Test(expected = ServiceException.class)
 	public void getAllWhenNotFound() throws ServiceException, IOException, URISyntaxException
 	{
 		when(client.execute(argThat(matchesGet("http://localhost/api/queues"))))
@@ -88,6 +97,15 @@ public class HttpClientQueueServiceTest
 			.thenReturn(json("{_id: 1, name: A}"));
 
 		assertEquals(new Queue("1", "A"), service.get("1"));
+	}
+
+	@Test(expected = ServiceException.class)
+	public void getWhenInvalid() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesGet("http://localhost/api/queue/1"))))
+			.thenReturn(json("x"));
+
+		service.get("1");
 	}
 
 	@Test(expected = ServiceException.class)

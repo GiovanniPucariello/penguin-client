@@ -11,6 +11,7 @@ import org.apache.http.client.HttpClient;
 import uk.co.blackpepper.penguin.client.ServiceException;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 
 public abstract class AbstractHttpClientService
 {
@@ -48,11 +49,18 @@ public abstract class AbstractHttpClientService
 		}
 	}
 
-	protected <T> T fromJson(HttpResponse response, Class<T> type) throws IOException
+	protected <T> T fromJson(HttpResponse response, Class<T> type) throws ServiceException, IOException
 	{
 		HttpEntity entity = response.getEntity();
 		InputStreamReader content = new InputStreamReader(entity.getContent());
 
-		return gson.fromJson(content, type);
+		try
+		{
+			return gson.fromJson(content, type);
+		}
+		catch (JsonParseException exception)
+		{
+			throw new ServiceException("Error parsing JSON", exception);
+		}
 	}
 }
