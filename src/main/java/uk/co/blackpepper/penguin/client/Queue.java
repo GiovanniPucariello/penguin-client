@@ -58,15 +58,17 @@ public class Queue
 
 	public int getStoryCount(boolean merged)
 	{
-	    int count = 0;
-	    for (Story s : stories)
-	    {
-		if (s.isMerged() == merged)
+		int count = 0;
+		
+		for (Story story : stories)
 		{
-		    count++;
+			if (story.isMerged() == merged)
+			{
+				count++;
+			}
 		}
-	    }
-	    return count;
+		
+		return count;
 	}
 
 	@Override
