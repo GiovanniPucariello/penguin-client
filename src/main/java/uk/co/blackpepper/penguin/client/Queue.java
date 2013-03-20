@@ -56,17 +56,17 @@ public class Queue
 		return stories;
 	}
 
-	public int getPendingCount()
+	public int getStoryCount(boolean merged)
 	{
-	    int pending = 0;
+	    int count = 0;
 	    for (Story s : stories)
 	    {
-		if (!s.isMerged()) 
+		if (s.isMerged() == merged)
 		{
-		    pending++;
+		    count++;
 		}
 	    }
-	    return pending;
+	    return count;
 	}
 
 	@Override
