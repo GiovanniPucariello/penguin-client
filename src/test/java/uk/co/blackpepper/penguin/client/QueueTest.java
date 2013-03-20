@@ -52,6 +52,14 @@ public class QueueTest
 		assertNotSame("stories", stories, queue.getStories());
 	}
 	
+	@Test
+	public void constructDefault()
+	{
+		Queue queue = new Queue();
+		
+		assertQueueEquals(null, null, Collections.<Story>emptyList(), queue);
+	}
+	
 	@Test(expected = UnsupportedOperationException.class)
 	public void getStoriesIsImmutable()
 	{

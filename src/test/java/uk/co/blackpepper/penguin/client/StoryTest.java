@@ -41,6 +41,14 @@ public class StoryTest
 	}
 	
 	@Test
+	public void constructDefault()
+	{
+		Story story = new Story();
+		
+		assertStoryEquals(null, null, null, null, false, story);
+	}
+	
+	@Test
 	public void hashCodeWhenEqual()
 	{
 		Story story1 = createStory();
