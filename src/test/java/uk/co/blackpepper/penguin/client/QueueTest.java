@@ -97,8 +97,8 @@ public class QueueTest
 	@Test
 	public void equalsWhenDifferentStories()
 	{
-		Queue queue1 = new Queue("1", "A", singletonList(new Story("2", "X", "Y", "Z", false)));
-		Queue queue2 = new Queue("1", "A", singletonList(new Story("3", "X", "Y", "Z", false)));
+		Queue queue1 = new Queue("1", "A", singletonList(new Story("2", "X", "Y", "Z", true)));
+		Queue queue2 = new Queue("1", "A", singletonList(new Story("3", "X", "Y", "Z", true)));
 		
 		assertFalse("equals", queue1.equals(queue2));
 	}
@@ -133,6 +133,6 @@ public class QueueTest
 	
 	private static Story createStory()
 	{
-		return new Story("1", "X", "Y", "Z", false);
+		return new Story("1", "X", "Y", "Z", true);
 	}
 }
