@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -27,8 +26,7 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 	@Override
 	public List<Story> getAll(String queueId) throws ServiceException
 	{
-		HttpGet get = new HttpGet(String.format(STORIES_URL, getServiceUrl(), queueId));
-		get.addHeader(HttpHeaders.ACCEPT, MediaTypes.APPLICATION_JSON_TYPE);
+		HttpGet get = getJson(String.format(STORIES_URL, getServiceUrl(), queueId));
 
 		try
 		{

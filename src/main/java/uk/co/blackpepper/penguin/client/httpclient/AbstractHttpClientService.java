@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
 import uk.co.blackpepper.penguin.client.ServiceException;
 
@@ -37,6 +39,13 @@ public abstract class AbstractHttpClientService
 	public String getServiceUrl()
 	{
 		return serviceUrl;
+	}
+	
+	protected static HttpGet getJson(String uri)
+	{
+		HttpGet get = new HttpGet(uri);
+		get.addHeader(HttpHeaders.ACCEPT, MediaTypes.APPLICATION_JSON_TYPE);
+		return get;
 	}
 
 	protected void checkOk(HttpResponse response, String message) throws ServiceException
