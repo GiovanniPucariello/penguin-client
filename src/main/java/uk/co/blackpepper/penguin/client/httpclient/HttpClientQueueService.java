@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -27,6 +28,7 @@ public class HttpClientQueueService extends AbstractHttpClientService implements
 	public List<Queue> getAll() throws ServiceException
 	{
 		HttpGet get = new HttpGet(String.format(QUEUES_URL, getServiceUrl()));
+		get.addHeader(HttpHeaders.ACCEPT, MediaTypes.APPLICATION_JSON_TYPE);
 
 		try
 		{
@@ -45,6 +47,7 @@ public class HttpClientQueueService extends AbstractHttpClientService implements
 	public Queue get(String id) throws ServiceException
 	{
 		HttpGet get = new HttpGet(String.format(QUEUE_URL, getServiceUrl(), id));
+		get.addHeader(HttpHeaders.ACCEPT, MediaTypes.APPLICATION_JSON_TYPE);
 
 		try
 		{
