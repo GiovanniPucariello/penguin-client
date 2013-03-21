@@ -29,7 +29,7 @@ final class HttpRequests
 		return matchesRequest(method, new URI(uri));
 	}
 
-	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri)
+	private static Matcher<HttpUriRequest> matchesRequest(String method, URI uri)
 	{
 		return matchesRequest(method, uri, APPLICATION_JSON);
 	}
