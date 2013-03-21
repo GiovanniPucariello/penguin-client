@@ -32,28 +32,30 @@ final class HttpRequests
 
 	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri)
 	{
-	    	return matchesRequest(method, uri, MediaTypes.APPLICATION_JSON);
+		return matchesRequest(method, uri, MediaTypes.APPLICATION_JSON);
 	}
-	
-	//TODO This could be extended to match against any number of headers, 
-	//      but all we need now is to match against the accept header.
-	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri, final String acceptHeader)
+
+	// TODO This could be extended to match against any number of headers,
+	// but all we need now is to match against the accept header.
+	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri,
+		final String acceptHeader)
 	{
 		return new TypeSafeMatcher<HttpUriRequest>()
 		{
 			@Override
 			protected boolean matchesSafely(HttpUriRequest request)
 			{
-			    	if (null != acceptHeader)
-			    	{
-			    	    	Header[] headers = request.getHeaders(HttpHeaders.ACCEPT);
-			    	    	if (headers.length != 1 || !headers[0].getValue().equals(acceptHeader))
-			    	    	{
-			    	    	    return false;
-			    	    	}
-			    	}
-			    	
-			    	request.getHeaders(HttpHeaders.ACCEPT);
+				if (null != acceptHeader)
+				{
+					Header[] headers = request.getHeaders(HttpHeaders.ACCEPT);
+					if (headers.length != 1 || !headers[0].getValue().equals(acceptHeader))
+					{
+						return false;
+					}
+				}
+
+				request.getHeaders(HttpHeaders.ACCEPT);
+				
 				return method.equals(request.getMethod())
 					&& uri.equals(request.getURI());
 			}
