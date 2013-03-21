@@ -44,7 +44,7 @@ public abstract class AbstractHttpClientService
 	protected static HttpGet getJson(String uri)
 	{
 		HttpGet get = new HttpGet(uri);
-		get.addHeader(HttpHeaders.ACCEPT, MediaTypes.APPLICATION_JSON_TYPE);
+		get.addHeader(HttpHeaders.ACCEPT, MediaTypes.APPLICATION_JSON);
 		return get;
 	}
 

@@ -32,7 +32,7 @@ final class HttpRequests
 
 	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri)
 	{
-	    	return matchesRequest(method, uri, MediaTypes.APPLICATION_JSON_TYPE);
+	    	return matchesRequest(method, uri, MediaTypes.APPLICATION_JSON);
 	}
 	
 	//TODO This could be extended to match against any number of headers, 
