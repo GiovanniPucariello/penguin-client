@@ -24,27 +24,16 @@ final class HttpRequests
 		return matchesRequest("GET", new URI(uri), APPLICATION_JSON);
 	}
 
-	// TODO This could be extended to match against any number of headers,
-	// but all we need now is to match against the accept header.
-	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri,
-		final String acceptHeader)
+	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri, final String accept)
 	{
 		return new TypeSafeMatcher<HttpUriRequest>()
 		{
 			@Override
 			protected boolean matchesSafely(HttpUriRequest request)
 			{
-				if (null != acceptHeader)
-				{
-					Header[] headers = request.getHeaders(HttpHeaders.ACCEPT);
-					if (headers.length != 1 || !headers[0].getValue().equals(acceptHeader))
-					{
-						return false;
-					}
-				}
-
 				return method.equals(request.getMethod())
-					&& uri.equals(request.getURI());
+					&& uri.equals(request.getURI())
+					&& accept.equals(getFirstHeaderValue(request, HttpHeaders.ACCEPT));
 			}
 
 			@Override
@@ -53,8 +42,18 @@ final class HttpRequests
 				description.appendText("request ")
 					.appendValue(method)
 					.appendText(" ")
-					.appendValue(uri);
+					.appendValue(uri)
+					.appendText(" (Accept: ")
+					.appendValue(accept)
+					.appendText(")");
 			}
 		};
+	}
+	
+	private static String getFirstHeaderValue(HttpUriRequest request, String name)
+	{
+		Header header = request.getFirstHeader(name);
+		
+		return (header != null) ? header.getValue() : null;
 	}
 }
