@@ -21,17 +21,7 @@ final class HttpRequests
 
 	public static Matcher<HttpUriRequest> matchesGetJson(String uri) throws URISyntaxException
 	{
-		return matchesRequest("GET", uri);
-	}
-
-	private static Matcher<HttpUriRequest> matchesRequest(String method, String uri) throws URISyntaxException
-	{
-		return matchesRequest(method, new URI(uri));
-	}
-
-	private static Matcher<HttpUriRequest> matchesRequest(String method, URI uri)
-	{
-		return matchesRequest(method, uri, APPLICATION_JSON);
+		return matchesRequest("GET", new URI(uri), APPLICATION_JSON);
 	}
 
 	// TODO This could be extended to match against any number of headers,
