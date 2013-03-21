@@ -12,6 +12,8 @@ import org.hamcrest.TypeSafeMatcher;
 
 final class HttpRequests
 {
+	private static final String APPLICATION_JSON = "application/json";
+	
 	private HttpRequests()
 	{
 		throw new AssertionError();
@@ -29,7 +31,7 @@ final class HttpRequests
 
 	private static Matcher<HttpUriRequest> matchesRequest(final String method, final URI uri)
 	{
-		return matchesRequest(method, uri, MediaTypes.APPLICATION_JSON);
+		return matchesRequest(method, uri, APPLICATION_JSON);
 	}
 
 	// TODO This could be extended to match against any number of headers,
