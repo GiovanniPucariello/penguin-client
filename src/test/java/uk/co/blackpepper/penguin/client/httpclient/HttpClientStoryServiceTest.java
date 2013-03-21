@@ -20,7 +20,7 @@ import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesGet;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesGetJson;
 import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.json;
 import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.notFound;
 
@@ -40,7 +40,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getAllWhenNoStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: []}"));
 
 		assertEquals(emptyList(), service.getAll("1"));
@@ -49,7 +49,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getAllWhenStory() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: false}"
 				+ "]}"));
@@ -60,7 +60,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getAllWhenStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: false},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: false}"
@@ -76,7 +76,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getAllWhenInvalid() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("x"));
 
 		service.getAll("1");
@@ -85,7 +85,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getAllWhenNotFound() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(notFound());
 
 		service.getAll("1");
@@ -94,7 +94,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getAllWhenIOException() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenThrow(new IOException());
 
 		service.getAll("1");
@@ -103,7 +103,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getMergedWhenMergedStory() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: true}"
 				+ "]}"));
@@ -114,7 +114,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getMergedWhenMergedStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: true},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: true}"
@@ -130,7 +130,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getMergedWhenUnmergedStory() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: false}"
 				+ "]}"));
@@ -141,7 +141,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getMergedWhenUnmergedStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: false},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: false}"
@@ -153,7 +153,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getMergedWhenMergedAndUnmergedStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: true},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: false}"
@@ -165,7 +165,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getMergedWhenInvalid() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("x"));
 
 		service.getMerged("1");
@@ -174,7 +174,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getMergedWhenNotFound() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(notFound());
 
 		service.getMerged("1");
@@ -183,7 +183,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getMergedWhenIOException() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenThrow(new IOException());
 		
 		service.getMerged("1");
@@ -192,7 +192,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getUnmergedWhenMergedStory() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: true}"
 				+ "]}"));
@@ -203,7 +203,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getUnmergedWhenMergedStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: true},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: true}"
@@ -215,7 +215,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getUnmergedWhenUnmergedStory() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: false}"
 				+ "]}"));
@@ -226,7 +226,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getUnmergedWhenUnmergedStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: false},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: false}"
@@ -242,7 +242,7 @@ public class HttpClientStoryServiceTest
 	@Test
 	public void getUnmergedWhenMergedAndUnmergedStories() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("{_id: 1, name: A, stories: ["
 				+ "{_id: 2, reference: P, title: Q, author: R, merged: true},"
 				+ "{_id: 3, reference: S, title: T, author: U, merged: false}"
@@ -254,7 +254,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getUnmergedWhenInvalid() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(json("x"));
 
 		service.getUnmerged("1");
@@ -263,7 +263,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getUnmergedWhenNotFound() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenReturn(notFound());
 		
 		service.getUnmerged("1");
@@ -272,7 +272,7 @@ public class HttpClientStoryServiceTest
 	@Test(expected = ServiceException.class)
 	public void getUnmergedWhenIOException() throws ServiceException, IOException, URISyntaxException
 	{
-		when(client.execute(argThat(matchesGet("api/queue/1"))))
+		when(client.execute(argThat(matchesGetJson("api/queue/1"))))
 			.thenThrow(new IOException());
 		
 		service.getUnmerged("1");

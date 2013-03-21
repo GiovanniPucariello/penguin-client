@@ -19,7 +19,7 @@ final class HttpRequests
 		throw new AssertionError();
 	}
 
-	public static Matcher<HttpUriRequest> matchesGet(String uri) throws URISyntaxException
+	public static Matcher<HttpUriRequest> matchesGetJson(String uri) throws URISyntaxException
 	{
 		return matchesRequest("GET", uri);
 	}
