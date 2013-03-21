@@ -2,13 +2,10 @@ package uk.co.blackpepper.penguin.client.httpclient;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.message.BasicHeader;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -54,8 +51,6 @@ final class HttpRequests
 					}
 				}
 
-				request.getHeaders(HttpHeaders.ACCEPT);
-				
 				return method.equals(request.getMethod())
 					&& uri.equals(request.getURI());
 			}
