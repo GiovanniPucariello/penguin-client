@@ -56,7 +56,7 @@ public class Queue
 		return stories;
 	}
 
-	public int getStoryCount(boolean merged)
+	public int getStoryCountByMerged(boolean merged)
 	{
 		int count = 0;
 		

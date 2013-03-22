@@ -68,115 +68,115 @@ public class QueueTest
 	}
 	
 	@Test
-	public void getStoryCountMergedWithNoStories()
+	public void getStoryCountByMergedWithMergedWhenNoStories()
 	{
 		Queue queue = createQueue();
 		
-		assertEquals(0, queue.getStoryCount(true));
+		assertEquals(0, queue.getStoryCountByMerged(true));
 	}
 	
 	@Test
-	public void getStoryCountMergedWithMergedStory()
+	public void getStoryCountByMergedWithMergedWhenMergedStory()
 	{
 		Story story = new Story("1", "P", "Q", "R", true);
 		Queue queue = createQueue(story);
 		
-		assertEquals(1, queue.getStoryCount(true));
+		assertEquals(1, queue.getStoryCountByMerged(true));
 	}
 	
 	@Test
-	public void getStoryCountMergedWithMergedStories()
+	public void getStoryCountByMergedWithMergedWhenMergedStories()
 	{
 		Story story1 = new Story("1", "P", "Q", "R", true);
 		Story story2 = new Story("2", "S", "T", "U", true);
 		Queue queue = createQueue(story1, story2);
 		
-		assertEquals(2, queue.getStoryCount(true));
+		assertEquals(2, queue.getStoryCountByMerged(true));
 	}
 	
 	@Test
-	public void getStoryCountMergedWithUnmergedStory()
+	public void getStoryCountByMergedWithMergedWhenUnmergedStory()
 	{
 		Story story = new Story("1", "P", "Q", "R", false);
 		Queue queue = createQueue(story);
 		
-		assertEquals(0, queue.getStoryCount(true));
+		assertEquals(0, queue.getStoryCountByMerged(true));
 	}
 	
 	@Test
-	public void getStoryCountMergedWithUnmergedStories()
+	public void getStoryCountByMergedWithMergedWhenUnmergedStories()
 	{
 		Story story1 = new Story("1", "P", "Q", "R", false);
 		Story story2 = new Story("2", "S", "T", "U", false);
 		Queue queue = createQueue(story1, story2);
 		
-		assertEquals(0, queue.getStoryCount(true));
+		assertEquals(0, queue.getStoryCountByMerged(true));
 	}
 	
 	@Test
-	public void getStoryCountMergedWithMergedAndUnmergedStories()
+	public void getStoryCountByMergedWithMergedWhenMergedAndUnmergedStories()
 	{
 		Story story1 = new Story("1", "P", "Q", "R", true);
 		Story story2 = new Story("2", "S", "T", "U", false);
 		Queue queue = createQueue(story1, story2);
 		
-		assertEquals(1, queue.getStoryCount(true));
+		assertEquals(1, queue.getStoryCountByMerged(true));
 	}
 	
 	@Test
-	public void getStoryCountUnmergedWithNoStories()
+	public void getStoryCountByMergedWithUnmergedWhenNoStories()
 	{
 		Queue queue = createQueue();
 		
-		assertEquals(0, queue.getStoryCount(false));
+		assertEquals(0, queue.getStoryCountByMerged(false));
 	}
 	
 	@Test
-	public void getStoryCountUnmergedWithMergedStory()
+	public void getStoryCountByMergedWithUnmergedWhenMergedStory()
 	{
 		Story story = new Story("1", "P", "Q", "R", true);
 		Queue queue = createQueue(story);
 		
-		assertEquals(0, queue.getStoryCount(false));
+		assertEquals(0, queue.getStoryCountByMerged(false));
 	}
 	
 	@Test
-	public void getStoryCountUnmergedWithMergedStories()
+	public void getStoryCountByMergedWithUnmergedWhenMergedStories()
 	{
 		Story story1 = new Story("1", "P", "Q", "R", true);
 		Story story2 = new Story("2", "S", "T", "U", true);
 		Queue queue = createQueue(story1, story2);
 		
-		assertEquals(0, queue.getStoryCount(false));
+		assertEquals(0, queue.getStoryCountByMerged(false));
 	}
 	
 	@Test
-	public void getStoryCountUnmergedWithUnmergedStory()
+	public void getStoryCountByMergedWithUnmergedWhenUnmergedStory()
 	{
 		Story story = new Story("1", "P", "Q", "R", false);
 		Queue queue = createQueue(story);
 		
-		assertEquals(1, queue.getStoryCount(false));
+		assertEquals(1, queue.getStoryCountByMerged(false));
 	}
 	
 	@Test
-	public void getStoryCountUnmergedWithUnmergedStories()
+	public void getStoryCountByMergedWithUnmergedWhenUnmergedStories()
 	{
 		Story story1 = new Story("1", "P", "Q", "R", false);
 		Story story2 = new Story("2", "S", "T", "U", false);
 		Queue queue = createQueue(story1, story2);
 		
-		assertEquals(2, queue.getStoryCount(false));
+		assertEquals(2, queue.getStoryCountByMerged(false));
 	}
 	
 	@Test
-	public void getStoryCountUnmergedWithMergedAndUnmergedStories()
+	public void getStoryCountByMergedWithUnmergedWhenMergedAndUnmergedStories()
 	{
 		Story story1 = new Story("1", "P", "Q", "R", true);
 		Story story2 = new Story("2", "S", "T", "U", false);
 		Queue queue = createQueue(story1, story2);
 		
-		assertEquals(1, queue.getStoryCount(false));
+		assertEquals(1, queue.getStoryCountByMerged(false));
 	}
 	
 	@Test
