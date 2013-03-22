@@ -234,34 +234,6 @@ public class QueueTest
 		assertEquals(expected, queue.toString());
 	}
 	
-	@Test
-	public void getPendingCountWhenEmpty()
-	{
-		Queue queue = createQueue();
-		
-		assertEquals(0, queue.getPendingCount());
-	}
-	
-	@Test
-	public void getPendingCountWhenNonePending()
-	{
-		Story story1 = new Story("1", "P", "Q", "R", true);
-		Story story2 = new Story("2", "S", "T", "U", true);
-		Queue queue = createQueue(story1, story2);
-		
-		assertEquals(0, queue.getPendingCount());
-	}
-	
-	@Test
-	public void getPendingCountWhenPendingPending()
-	{
-		Story story1 = new Story("1", "P", "Q", "R", false);
-		Story story2 = new Story("2", "S", "T", "U", false);
-		Queue queue = createQueue(story1, story2);
-		
-		assertEquals(2, queue.getPendingCount());
-	}
-	
 	private static void assertQueueEquals(String expectedId, String expectedName, List<Story> expectedStories,
 		Queue actual)
 	{

@@ -97,17 +97,4 @@ public class Queue
 	{
 		return String.format("%s[_id=%s, name=%s, stories=%s]", getClass().getName(), _id, name, stories);
 	}
-	
-	public int getPendingCount()
-	{
-	    int pending = 0;
-	    for (Story s : stories)
-	    {
-		if (!s.isMerged()) 
-		{
-		    pending++;
-		}
-	    }
-	    return pending;
-	}	
 }
