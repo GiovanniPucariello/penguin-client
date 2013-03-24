@@ -1,10 +1,14 @@
 package uk.co.blackpepper.penguin.client.httpclient;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -55,5 +59,48 @@ final class HttpRequests
 		Header header = request.getFirstHeader(name);
 		
 		return (header != null) ? header.getValue() : null;
+	}
+
+	public static Matcher<HttpUriRequest> matchesPostRequest(String uri, String body) throws URISyntaxException
+	{
+	    	return matchesPostRequest(new URI(uri), body);
+	}
+	
+	private static Matcher<HttpUriRequest> matchesPostRequest(final URI uri, final String body)
+	{
+		return new TypeSafeMatcher<HttpUriRequest>()
+		{
+			@Override
+			protected boolean matchesSafely(HttpUriRequest request)
+			{
+			    	try
+			    	{
+				    	HttpEntityEnclosingRequestBase entityRequest = (HttpEntityEnclosingRequestBase)request;
+				    	StringWriter writer = new StringWriter();
+				    	IOUtils.copy(entityRequest.getEntity().getContent(), writer, "UTF-8");
+				    	String requestBody = writer.toString();
+				    	
+					return "POST".equals(request.getMethod())
+						&& uri.equals(request.getURI())
+						&& body.equals(requestBody);
+			    	}
+			    	catch (Exception e) 
+			    	{
+			    	    return false;
+				}
+			}
+
+			@Override
+			public void describeTo(Description description)
+			{
+				description.appendText("request ")
+					.appendValue("POST")
+					.appendText(" ")
+					.appendValue(uri)
+					.appendText(" (Body: ")
+					.appendValue(body)
+					.appendText(")");
+			}
+		};
 	}
 }

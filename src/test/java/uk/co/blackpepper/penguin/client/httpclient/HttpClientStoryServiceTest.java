@@ -19,9 +19,12 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 
 import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesGetJson;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpRequests.matchesPostRequest;
 import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.json;
+import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.noContent;
 import static uk.co.blackpepper.penguin.client.httpclient.HttpResponses.notFound;
 
 public class HttpClientStoryServiceTest
@@ -276,5 +279,41 @@ public class HttpClientStoryServiceTest
 			.thenThrow(new IOException());
 		
 		service.getUnmerged("1");
+	}
+
+	@Test
+	public void mergeStoryPostsRequest() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesPostRequest("api/queue/q1/story/s1/merge", "merge"))))
+			.thenReturn(noContent());
+		
+		service.merge("q1", "s1");
+	}
+
+	@Test(expected = ServiceException.class)
+	public void mergeStoryWhenIOException() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesPostRequest("api/queue/q1/story/s1/merge", "merge"))))
+			.thenThrow(new IOException());
+		
+		service.merge("q1", "s1");
+	}
+
+	@Test
+	public void unmergeStoryPostsRequest() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesPostRequest("api/queue/q1/story/s1/unmerge", "unmerge"))))
+			.thenReturn(noContent());
+		
+		service.unmerge("q1", "s1");
+	}
+
+	@Test(expected = ServiceException.class)
+	public void unmergeStoryWhenIOException() throws ServiceException, IOException, URISyntaxException
+	{
+		when(client.execute(argThat(matchesPostRequest("api/queue/q1/story/s1/unmerge", "unmerge"))))
+			.thenThrow(new IOException());
+		
+		service.unmerge("q1", "s1");
 	}
 }

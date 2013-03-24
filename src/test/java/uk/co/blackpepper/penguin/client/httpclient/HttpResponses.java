@@ -27,6 +27,11 @@ final class HttpResponses
 		return response(HttpStatus.SC_NOT_FOUND, null);
 	}
 
+	public static HttpResponse noContent()
+	{
+		return response(HttpStatus.SC_NO_CONTENT, null);
+	}
+
 	private static HttpResponse ok(HttpEntity entity)
 	{
 		return response(HttpStatus.SC_OK, entity);

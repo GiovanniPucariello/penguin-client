@@ -50,9 +50,19 @@ public abstract class AbstractHttpClientService
 
 	protected void checkOk(HttpResponse response, String message) throws ServiceException
 	{
+	    	checkResponse(response, HttpStatus.SC_OK, message);
+	}
+
+	protected void checkNoContent(HttpResponse response, String message) throws ServiceException
+	{
+	    	checkResponse(response, HttpStatus.SC_NO_CONTENT, message);
+	}
+
+	protected void checkResponse(HttpResponse response, int expectedStatusCode, String message) throws ServiceException
+	{
 		int statusCode = response.getStatusLine().getStatusCode();
 
-		if (statusCode != HttpStatus.SC_OK)
+		if (statusCode != expectedStatusCode)
 		{
 			throw new ServiceException(message + ": " + statusCode);
 		}

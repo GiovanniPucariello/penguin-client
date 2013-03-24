@@ -9,4 +9,8 @@ public interface StoryService
 	List<Story> getMerged(String queueId) throws ServiceException;
 
 	List<Story> getUnmerged(String queueId) throws ServiceException;
+
+	void merge(String queueId, String storyId) throws ServiceException;
+
+	void unmerge(String queueId, String storyId) throws ServiceException;
 }

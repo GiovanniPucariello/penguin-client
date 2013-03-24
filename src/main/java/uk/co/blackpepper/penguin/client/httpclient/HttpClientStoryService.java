@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 
 import uk.co.blackpepper.penguin.client.Queue;
 import uk.co.blackpepper.penguin.client.ServiceException;
@@ -17,6 +19,10 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 {
 	// TODO: use /queue/:id/stories when implemented
 	private static final String STORIES_URL = "%s/queue/%s";
+	
+	private static final String MERGE_URL = "%s/queue/%s/story/%s/merge";
+
+	private static final String UNMERGE_URL = "%s/queue/%s/story/%s/unmerge";
 
 	public HttpClientStoryService(HttpClient client, String serviceUrl)
 	{
@@ -66,5 +72,37 @@ public class HttpClientStoryService extends AbstractHttpClientService implements
 		}
 		
 		return filteredStories;
+	}
+
+	@Override
+	public void merge(String queueId, String storyId) throws ServiceException 
+	{
+	    try
+	    {
+		HttpPost post = new HttpPost(String.format(MERGE_URL, getServiceUrl(), queueId, storyId));
+		post.setEntity(new StringEntity("merge"));
+		HttpResponse response = getClient().execute(post);
+		checkNoContent(response, "Error merging stories");
+	    }
+	    catch (Exception exception)
+	    {
+		throw new ServiceException("Error merging story", exception);
+	    }
+	}
+
+	@Override
+	public void unmerge(String queueId, String storyId) throws ServiceException 
+	{
+	    try
+	    {
+		HttpPost post = new HttpPost(String.format(UNMERGE_URL, getServiceUrl(), queueId, storyId));
+		post.setEntity(new StringEntity("unmerge"));
+		HttpResponse response = getClient().execute(post);
+		checkNoContent(response, "Error unmerging stories");
+	    }
+	    catch (Exception exception)
+	    {
+		throw new ServiceException("Error unmerging story", exception);
+	    }
 	}
 }
